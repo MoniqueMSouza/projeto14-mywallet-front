@@ -1,5 +1,5 @@
 export default function App(){
     return(
-        <div></div>
+        <div>Oieeee mundo lindu</div>
     )
 }
