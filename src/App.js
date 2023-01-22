@@ -1,8 +1,8 @@
-import Login from './pages/Login'
-import Cadastro from './pages/Cadastro'
-import Home from './pages/Home'
-import NovaEntrada from './pages/NovaEntrada'
-import NovaSaida from './pages/NovaSaida'
+import Login from './pages/Login/Login'
+import Cadastro from './pages/Cadastro/Cadastro'
+import Home from './pages/Home/Home'
+import NovaEntrada from './pages/NovaEntrada/NovaEntrada'
+import NovaSaida from './pages/NovaSaida/NovaSaida'
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
 
 
