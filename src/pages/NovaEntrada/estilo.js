@@ -63,4 +63,5 @@ export const StyledButton = styled.button`
     text-align: center;
     background: #A328D6;
     color: #FFFFFF;
+    
   `
