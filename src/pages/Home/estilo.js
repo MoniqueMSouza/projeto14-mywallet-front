@@ -62,7 +62,7 @@ h1{
     margin-left: 20px;
 }
 h2{
-    color:#03AC00;
+    color: ${props => props.saldo >= 0 ? "#03AC00" : "#C70000"};
 }
     
 `
@@ -87,7 +87,7 @@ color:#000000;
 margin-left: 8px;
 `
 export const Valor = styled.div`
-color: #C70000;
+color: ${props => props.tipo === "entrada" ? "#03AC00" : "#C70000"};
 position: absolute;
 right: 0;
 `

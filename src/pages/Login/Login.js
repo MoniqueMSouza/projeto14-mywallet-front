@@ -3,10 +3,13 @@ import React, { useContext } from 'react'
 import { useState } from "react"
 import { ThreeDots } from "react-loader-spinner"
 import MyContext from '../../contexts/context'
+import {useNavigate } from "react-router-dom";
+import axios from 'axios'
 
 export default function Login() {
-  const { email, setEmail, setToken, password, setPassword } = useContext(MyContext)
+  const { email, setEmail, token, setToken, password, setPassword } = useContext(MyContext)
   const [botaoAnimado, setBotaoAnimado] = useState("Entrar")
+  const navigate = useNavigate();
 
   function entrar(e) {
     e.preventDefault()
@@ -22,9 +25,27 @@ export default function Login() {
         visible={true}
       />)
 
-    console.log('Deu certo o formulário!')
-    console.log(email)
-    console.log(password)
+
+      const URL = `${process.env.REACT_APP_API_URL}/entrar`
+
+      const dadosCadastro = { email, password }
+  
+      const promessa = axios.post(URL, dadosCadastro)
+
+      promessa.then(res => { 
+        alert("Login Realizado!")
+        navigate('/home')
+        setToken(res.data)
+        console.log(token)
+       })
+
+      promessa.catch(res => {
+        alert('Usuário ou senha inválidos!')
+        setBotaoAnimado("Entrar")
+        setEmail("")
+        setPassword("")        
+  
+      })
 
   }
 

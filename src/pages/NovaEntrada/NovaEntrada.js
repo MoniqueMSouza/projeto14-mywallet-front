@@ -3,10 +3,13 @@ import React, { useContext } from 'react'
 import { ThreeDots } from "react-loader-spinner"
 import MyContext from '../../contexts/context'
 import { useState } from "react"
+import axios from 'axios'
+import {useNavigate } from "react-router-dom";
 
 export default function NovaEntrada() {
-    const {valor, setValor, description, setDescription} = useContext(MyContext)
+    const {valor, setValor, description, setDescription, token} = useContext(MyContext)
     const [botaoAnimado, setBotaoAnimado] = useState("Salvar entrada")
+    const navigate = useNavigate();
 
     function salvarEntrada(e){
         e.preventDefault()
@@ -21,11 +24,25 @@ export default function NovaEntrada() {
             wrapperClassName=""
             visible={true}
           />)
-    
-          console.log('Deu certo o formulário!')
-          console.log(valor)
-          console.log(description)      
 
+          const URL = `${process.env.REACT_APP_API_URL}/nova-entrada`
+          const dadosCadastro = { valor, description}
+          const config = {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+      
+          const promise = axios.post(URL,dadosCadastro,config)
+      
+          promise.then((res) => {
+            alert('Entrada registrada com sucesso!') 
+            navigate('/home')                
+          
+          })
+          promise.catch((err) => {
+            console.log(err.response.data)
+          })
     
     }
     

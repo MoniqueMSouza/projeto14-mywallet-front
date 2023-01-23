@@ -3,10 +3,13 @@ import { ThreeDots } from "react-loader-spinner"
 import React, { useContext } from 'react'
 import MyContext from '../../contexts/context'
 import { useState } from "react"
+import axios from 'axios'
+import {useNavigate } from "react-router-dom";
 
 export default function Cadastro() {
   const { email, setEmail, name, setName, password, setPassword, confirmPassword, setConfirmPassword} = useContext(MyContext)
   const [botaoAnimado, setBotaoAnimado] = useState("Cadastrar")
+  const navigate = useNavigate();
 
   function cadastrar(e) {
     e.preventDefault()
@@ -22,12 +25,26 @@ export default function Cadastro() {
         visible={true}
       />)
 
-      console.log('Deu certo o formulário!')
-      console.log(name)
-      console.log(email)      
-      console.log(password)
-      console.log(confirmPassword)
+      const URL = `${process.env.REACT_APP_API_URL}/cadastrar`
 
+      const dadosCadastro = { name, email, password, confirmPassword }
+  
+      const promessa = axios.post(URL, dadosCadastro)
+
+      promessa.then(res => { 
+        alert("Cadastro realizado!")
+        navigate('/')
+       })
+
+      promessa.catch(res => {
+        alert('Confira novamente todos os campos preenchidos!')
+        setBotaoAnimado("Cadastrar")
+        setEmail("")
+        setName("")
+        setPassword("")
+        setConfirmPassword("")
+  
+      })
   }
 
   return (
